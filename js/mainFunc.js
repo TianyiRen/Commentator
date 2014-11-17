@@ -11,8 +11,7 @@ $(document).ready(function() {
 
     getRecentComment();
 
-    function getRecentComment(article_url) {
-        // alert("Get Recent Comments!");
+    function getRecentComment() {
         var parameters = [];
         parameters.push(['api-key', auth_community.apiKey]);
         var message = {
@@ -27,7 +26,6 @@ $(document).ready(function() {
             'dataType' : 'jsonp',
             'cache': true,
             'success' : function(data, textStats, XMLHttpRequest) {
-                console.log("http:\\/\\/")
                 var count = data.results.comments.length;
                 var comments = data.results.comments;
                 var html = '';
@@ -38,70 +36,29 @@ $(document).ready(function() {
                 html += '<th>Context</th>';
                 html += '</tr>';
                 html += '</thead>';
-                for(var i = 0; i < 3; i++) {
+                for(var i = 0; i < count; i++) {
                     var index = i+1;
                     var userComments = comments[i].userComments;
                     var userID = userComments.split('/')[7].split('.')[0];
                     var userName = comments[i].display_name;
                     var article_url = comments[i].articleURL;
-                    // console.log(article_url);
-                    /*call article API*/
-                    // var temp = [];
-                    // temp = article_url.split("/");
-                    // for(var j=2; j<temp.length-1; j++) {
-                    //     encoded_article_url = encoded_article_url+temp[j]+"\\/";
-                    // }
-                    // encoded_article_url += temp[temp.length-1];
-                    // console.log("Encoded: ");
-                    // var fq_param = "web_url:(\"";
-                    // fq_param += encoded_article_url;
-                    // fq_param += "\")";
-                    // console.log(fq_param);
-                    var encodedURL = encodeURIComponent(article_url);
-                    var fq_param = "web_url:(\"" + encodedURL + "\")";;
-                    console.log(fq_param);
-
-                    var message = {
-                        'url': article_base_url + ".json",
-                        'method': 'GET'
-                    };
-                    $.ajax({
-                        'url' : message.url,
-                        'data': {
-                            'fq': fq_param,
-                            'api-key': auth_article.apiKey,  
-                        },
-                        'dataType' : 'json',
-                        'cache': true,
-                        'success' : function(data, textStats, XMLHttpRequest) {
-                          console.log(data);
-                        }
-                    });
-
-
-
-
-
                     var moreComments_url = "moreComments.html?userID="+userID+"&userName="+userName+"&articleURL="+article_url;
-                    
-
+                    var articleDetail_url = "articleDetail.html?article_url="+article_url+"&userName="+userName;
                     html += '<tbody>',
                     html += '<tr>',
                     html += '<td class="number" id="comment-index">No.' + index + '</td>',
                     html += '<td class="comment_content"><div><b>' + comments[i].display_name + '</b></div>',
                     html += "<a class='comment_content' style='border:none;' id='user-comments' href='"+moreComments_url+"'>more comments</a></td>",
                     html += '<td class="comment_content" id="comment-detail" style="text-align:justify">' + comments[i].commentBody + '</td>',
-                    html += '<td id="ralated_article"><a href="'+article_url+'">article</a></td>',
+                    html += '<td id="ralated-article"><a href="'+articleDetail_url+'">Related Article</a></td>',
                     html += '</tr>',
                     html += '</tbody>'
                 }
-
-                $("#comments-table").empty().append(html);    
-
-                        
+                $("#comments-table").empty().append(html);           
             }
         });
     }
+
     function getRandomComment() {
         alert("Get Random Set Comments!");
           var parameters = [];

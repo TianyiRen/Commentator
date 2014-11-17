@@ -13,7 +13,6 @@ $(document).ready(function() {
 	var para_article_url = [];
 	var para_article_url = paras[2].split("=");
 	var article_url = para_article_url[1];
-	console.log(article_url);
 	var temp = [];
 	temp = userName.split("%20");
 	var firstName = temp[0];
@@ -37,8 +36,7 @@ $(document).ready(function() {
     else {
     	$("#moreComments-name").append("<h1>"+firstName+ "</h1>");
     }
-    
-    getCommentByUid(userID);
+    getCommentByUid(userID, userName, article_url);
     
     function goBack() {
     	window.location.hash = window.location.lasthash[window.location.lasthash.length-1];
@@ -59,8 +57,7 @@ $(document).ready(function() {
 	        }
 	    }
 	}
-	function getCommentByUid(userID) {
-        alert(userID);
+	function getCommentByUid(userID, userName, article_url) {
         var parameters = [];
           parameters.push(['api-key', auth_community.apiKey]);
           var message = {
@@ -76,6 +73,7 @@ $(document).ready(function() {
               'cache': true,
               'success' : function(data, textStats, XMLHttpRequest) {
                   	console.log(data);
+
                   	var count = data.results.comments.length;
 	                var comments = data.results.comments;
 	                var html = '';
@@ -88,15 +86,16 @@ $(document).ready(function() {
 	                html += '</thead>';
 	                for(var i = 0; i < count; i++) {
 	                    var index = i+1;
-	                    // var article_url = comments
+
+	                    var articleDetail_url = "articleDetail.html?article_url="+article_url+"&userName="+userName;
 	                    html += '<tbody>',
 	                    html += '<tr>',
 	                    html += '<td class="number" id="comment-index"><b>No.' + index + '</b></td>',
 	                    html += '<td style="text-align:justify;">' + comments[i].commentBody + '</td>',
 	                    html += '<td class="number" style="text-align:center;"><b>' + comments[i].recommendations + '</b></td>',
+	                    html += '<td id="ralated-article"><a href="'+articleDetail_url+'">Related Article</a></td>',
 	                    html += '</tr>'
 	                    total_recommendations += comments[i].recommendations;
-	                    console.log(total_recommendations);
 	                }
 	                
 	                $("#moreComments-table").empty().append(html);
