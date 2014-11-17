@@ -38,7 +38,7 @@ $(document).ready(function() {
                 html += '<th>Context</th>';
                 html += '</tr>';
                 html += '</thead>';
-                for(var i = 0; i < 3; i++) {
+                for(var i = 0; i < count; i++) {
                     var index = i+1;
                     var userComments = comments[i].userComments;
                     var userID = userComments.split('/')[7].split('.')[0];
