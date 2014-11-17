@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Commentator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search and View Comments">
+    <meta name="author" content="Tianyi Ren">
+
+
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/js/bootstrap.min.js">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+      body {
+        padding-bottom: 800px;
+        height: auto;
+      }
+
+      /* Custom class */
+      .rating {
+        float:left;
+      }
+
+      /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+         follow these rules. Every browser that supports :checked also supports :not(), so
+         it doesn’t make the test unnecessarily selective */
+      .rating:not(:checked) > input {
+          position:absolute;
+          top:-9999px;
+          clip:rect(0,0,0,0);
+      }
+
+      .rating:not(:checked) > label {
+          float:right;
+          width:1em;
+          padding:0 .01em;
+          overflow:hidden;
+          white-space:nowrap;
+          cursor:pointer;
+          font-size:200%;
+          line-height:1.2;
+          color:#ddd;
+          text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+      }
+
+      .rating:not(:checked) > label:before {
+          content: '★ ';
+      }
+
+      .rating > input:checked ~ label {
+          color: #FFC408;
+          text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+      }
+
+      .rating:not(:checked) > label:hover,
+      .rating:not(:checked) > label:hover ~ label {
+          color: #FFC408;
+          text-shadow:1px 1px #FFC408, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+      }
+
+      .rating > input:checked + label:hover,
+      .rating > input:checked + label:hover ~ label,
+      .rating > input:checked ~ label:hover,
+      .rating > input:checked ~ label:hover ~ label,
+      .rating > label:hover ~ input:checked ~ label {
+          color: #FFC408;
+          text-shadow:1px 1px #FFC408, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+      }
+
+      .rating > label:active {
+          position:relative;
+          top:2px;
+          left:2px;
+      }
+      table td {
+        border-top: none;
+      }
+
+      .row.no-gutter [class*='col-'] {
+        padding-right:0;
+        padding-left:0;
+      }
+
+      .row.no-gutter .thumbnail {
+        margin-bottom: 0;
+        padding: 0;
+        margin-right: 0;
+        margin-left: 0;
+      }
+
+      .row.no-gutter .thumbnail>img {
+        width: 15s0%;
+      }
+   
+      .grid_name {
+          border: 1px solid #ccc;
+          font-family:georgia, serif;
+          color:#381704;
+          font-size:10px;
+          letter-spacing:0.1em;
+          line-height:200%;
+          padding-top:11px;
+          text-transform: uppercase;
+      }
+      .grid_rate {
+        border: 1px solid #ccc;
+        font-family:georgia,serif;
+        color:#381704;
+        font-size:12px;
+        font-weight:normal;
+        line-height:150%;
+        padding:0px; 
+      }
+      .number {
+        font-family:georgia, serif;
+        color:#3B200F;
+        font-size:16px;
+        font-weight:bold;
+        line-height:125%;
+        text-align:center;
+      }
+      .comments_list{
+        padding: 150px;
+        padding-top: 80px;
+
+      }
+      .image {
+        width: 200;
+        height: 150;
+      }
+      .title {
+        text-align: center;
+        font-size: 20px;
+        margin: 50px;
+
+      }
+      .container-narrow {
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      html {
+        background-color: #e5e5e5;
+        font-family: "Helvetica Neue Light", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      #main {
+        margin: 30px 0;
+        /*column-count: 5;*/
+        position: relative; 
+      }
+
+      header h1 {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 200;
+        margin: 30px 0 10px 0;
+      }
+
+      header p {
+        text-align: center;
+        font-size: 14px;
+        color: #666666;
+        margin: 0;
+        font-weight: 200;
+      }
+</style>
+  
+
+  </head>
+
+  <body>
+    <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+      
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href='#' target="_blank">Home</a></li>
+                    <li><a href="#" target="_blank">About</a></li>
+                    <li><a href="#" target="_blank">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    </div>
+    <div class="container-narrow">
+      <div class="comments_list">
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div id="moreComments-name" class="grid_name span5" style="border:none;">
+
+            </div>
+            <div class="grid_rate span7" style="border:none; padding-top:20px; float:right; text-align:right;padding-left:325px;">
+              <div style="float:left;" id="moreComments-totalRec" ></div>
+            </div>
+            <div style="float:left; padding:30px; padding-left:30px;border:none; " class="grid_rate rating" id="moreComments-pleaseRate"></div>
+            
+          </div>
+        </div>
+
+        <table id="moreComments-table" class="grid_rate table table-hover" style="font-size: 15px;">
+        </table>
+      </div>
+  </div> 
+
+
+    <!-- javascript
+    ================================================== -->
+    
+    <script type="text/javascript" src="js/oauth.js"></script>
+    <script type="text/javascript" src="js/moreComments.js"></script>
+             
+
+  </body>
+</html>
