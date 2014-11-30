@@ -10,16 +10,70 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <style>
+            body {
+                height: auto;
+                padding-bottom: 20px;
+            }
+            .headline {
+                font-family: Georgia, "Times New Roman", Times, serif;
+                font-size: 50px;
+                margin-top: 5px; margin-bottom: 0px;
+                text-align: left;
+                font-weight: normal;
+                color: #222;
+            }
+
+            .paragraph {
+                    color: #605833;
+                    font-family: italic, serif;
+                    font-size: 16px;
+                    padding: 10px 0;
+                    padding-bottom: 15px;
+                    padding-top: 0px;
+            }
+
+            .post-info {
+                /*border-top: 1px dashed #70673b;*/
+                /*border-bottom: 1px dashed #70673b;*/
+                font-size: 15px;
+                margin: 15px 0 15px;
+                padding: 3px;
+                /*text-transform: uppercase;*/
+                color: #bfb585;
+            }
+
+            .read-more {
+                background-color: #605833;
+                border-radius: 5px 5px 5px 5px;
+                color: white;
+                float: right;
+                font-family: Enriqueta,Arial,sans-serif;
+                font-size: 15px;
+                padding: 3px 10px;
+            }
+
+            .read-more:hover {
+                background-color: #92864d;
+                border-radius: 5px 5px 5px 5px;
+                text-decoration: none;
+            }
             .thumbnail {
                 position: relative;
                 padding: 0px;
                 margin-bottom: 20px;
             }
 
-                .thumbnail:hover {
-                    background-color: #5CB85C;
-                }
-
+            .thumbnail:hover {
+                background-color: #5CB85C;
+            }
+            .comment_content {
+                font-family: italic, serif;
+                color:#381704;
+                font-size:50px;
+                font-weight:bold;
+                line-height:400%;
+                padding:0px;
+            }
             .votes {
                 font-size: 47px;
                 color: #197BB5;
@@ -44,7 +98,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href='#' target="_blank">Home</a></li>
+                        <li class="active"><a href='../index.html' target="_blank">Home</a></li>
                         <li><a href="#" target="_blank">About</a></li>
                         <li><a href="#" target="_blank">Contact</a></li>
                     </ul>
@@ -76,7 +130,10 @@
     <br>
         <div class="container">
             <div class="row">
-                <div id="article-abstract" class="col-md-12">
+                <div id="article-abstract" class="col-md-12" style="height: 500px;">
+                </div>
+                <div id="article-readmore" style="float:right; padding-right:20px;">
+                    <!-- <button class="read-more">read more</button> -->
                 </div>
             </div>
         </div>

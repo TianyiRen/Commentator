@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Search and View Comments">
     <meta name="author" content="Tianyi Ren">
-
-
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="lib/bootstrap/js/bootstrap.min.js">
@@ -19,19 +17,98 @@
 
     <style type="text/css">
       body {
-        padding-bottom: 800px;
         height: auto;
       }
-
       /* Custom class */
+      .headline {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            font-size: 50px;
+            margin-top: 5px; margin-bottom: 0px;
+            text-align: left;
+            font-weight: normal;
+            color: #222;
+        }
+
+        .paragraph {
+            color: #605833;
+            font-family: italic, serif;
+            font-size: 16px;
+            padding: 10px 0;
+        }
+
+        .post-info {
+            border-top: 1px dashed #70673b;
+            border-bottom: 1px dashed #70673b;
+            font-size: 15px;
+            margin: 15px 0 15px;
+            padding: 3px;
+            /*text-transform: uppercase;*/
+            color: #bfb585;
+        }
       .rating {
         float:left;
       }
-
+      .panel_rate {
+        background-color:#A5DEE4;
+        border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        
+      }
       /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
          follow these rules. Every browser that supports :checked also supports :not(), so
          it doesn’t make the test unnecessarily selective */
+
+      .star-five {
+         margin: 50px 0;
+         position: relative;
+         display: block;
+         color: ;
+         width: 0px;
+         height: 0px;
+         border-right:  100px solid transparent;
+         border-bottom: 70px  solid #FFC408;
+         border-left:   100px solid transparent;
+         -moz-transform:    rotate(35deg);
+         -webkit-transform: rotate(35deg);
+         -ms-transform:     rotate(35deg);
+         -o-transform:      rotate(35deg);
+      }
+      .star-five:before {
+         border-bottom: 80px solid #FFC408;
+         border-left: 30px solid transparent;
+         border-right: 30px solid transparent;
+         position: absolute;
+         height: 0;
+         width: 0;
+         top: -45px;
+         left: -65px;
+         display: block;
+         content: '';
+         -webkit-transform: rotate(-35deg);
+         -moz-transform:    rotate(-35deg);
+         -ms-transform:     rotate(-35deg);
+         -o-transform:      rotate(-35deg);
+
+      }
+      .star-five:after {
+         position: absolute;
+         display: block;
+         color: #FFC408;
+         top: 3px;
+         left: -105px;
+         width: 0px;
+         height: 0px;
+         border-right: 100px solid transparent;
+         border-bottom: 70px solid #FFC408;
+         border-left: 100px solid transparent;
+         -webkit-transform: rotate(-70deg);
+         -moz-transform:    rotate(-70deg);
+         -ms-transform:     rotate(-70deg);
+         -o-transform:      rotate(-70deg);
+         content: '';
+      }
       .rating:not(:checked) > input {
+          float:right;
           position:absolute;
           top:-9999px;
           clip:rect(0,0,0,0);
@@ -98,7 +175,12 @@
       .row.no-gutter .thumbnail>img {
         width: 15s0%;
       }
-   
+      .wrapper {
+          border: 1px #e4e4e4 solid;
+          padding: 20px;
+          border-radius: 4px;
+          box-shadow: 0 0 6px #ccc;
+      } 
       .grid_name {
           border: 1px solid #ccc;
           font-family:georgia, serif;
@@ -109,8 +191,17 @@
           padding-top:11px;
           text-transform: uppercase;
       }
+      .comment_content {
+        /*border: 1px solid #ccc;*/
+        font-family:georgia,serif;
+        color:#381704;
+        font-size:17px;
+        font-weight:normal;
+        line-height:150%;
+        padding:0px;
+      }
       .grid_rate {
-        border: 1px solid #ccc;
+        /*border: 1px solid #ccc;*/
         font-family:georgia,serif;
         color:#381704;
         font-size:12px;
@@ -121,14 +212,13 @@
       .number {
         font-family:georgia, serif;
         color:#3B200F;
-        font-size:16px;
+        font-size:15px;
         font-weight:bold;
         line-height:125%;
-        text-align:center;
       }
       .comments_list{
-        padding: 150px;
-        padding-top: 80px;
+        /*margin: 150px;*/
+        margin-top: 50px;
 
       }
       .image {
@@ -142,8 +232,8 @@
 
       }
       .container-narrow {
-        margin-top: 50px;
-        text-align: center;
+        padding: 70px;
+        text-align: justify;
       }
 
       html {
@@ -190,7 +280,7 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href='#' target="_blank">Home</a></li>
+                    <li class="active"><a href='../index.html' target="_blank">Home</a></li>
                     <li><a href="#" target="_blank">About</a></li>
                     <li><a href="#" target="_blank">Contact</a></li>
                 </ul>
@@ -200,20 +290,12 @@
 
     </div>
     <div class="container-narrow">
+      <div class="jumbotron" style="background-color:white; height:360px; padding:10px;">
+          <p id="moreComments-name" class="jumbotron wrapper" style="background-color:white; height:190px; width:700px; float:left;"></p>
+          <p id="moreComments-totalRec" class="jumbotron wrapper" style="background-color:white; height:190px; width:400px; float:right;"></p>
+        <p id="moreComments-pleaseRate" class="jumbotron rating wrapper" style="background-color:white; height:130px; padding:10px; width: 1120px;"></p>
+    </div>
       <div class="comments_list">
-        <div class="container-fluid">
-          <div class="row-fluid">
-            <div id="moreComments-name" class="grid_name span5" style="border:none;">
-
-            </div>
-            <div class="grid_rate span7" style="border:none; padding-top:20px; float:right; text-align:right;padding-left:325px;">
-              <div style="float:left;" id="moreComments-totalRec" ></div>
-            </div>
-            <div style="float:left; padding:30px; padding-left:30px;border:none; " class="grid_rate rating" id="moreComments-pleaseRate"></div>
-            
-          </div>
-        </div>
-
         <table id="moreComments-table" class="grid_rate table table-hover" style="font-size: 15px;">
         </table>
       </div>

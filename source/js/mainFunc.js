@@ -11,6 +11,9 @@ $(document).ready(function() {
 
     getRecentComment();
 
+    $('#getCommments-btn').click(function(e) {
+        getRecentComment();
+    });
     function getRecentComment() {
         var parameters = [];
         parameters.push(['api-key', auth_community.apiKey]);
@@ -31,9 +34,10 @@ $(document).ready(function() {
                 var html = '';
                 html += '<thead>';
                 html += '<tr>';
-                html += '<th></th>';
-                html += '<th>Commentor</th>';
-                html += '<th>Context</th>';
+                html += '<th style="font-size:19px;">No.</th>';
+                html += '<th style="font-size:19px;">Commentor</th>';
+                html += '<th style="font-size:19px;">Context</th>';
+                html += '<th style="font-size:19px;">Article</th>'
                 html += '</tr>';
                 html += '</thead>';
                 for(var i = 0; i < count; i++) {
@@ -42,15 +46,15 @@ $(document).ready(function() {
                     var userID = userComments.split('/')[7].split('.')[0];
                     var userName = comments[i].display_name;
                     var article_url = comments[i].articleURL;
-                    var moreComments_url = "moreComments.html?userID="+userID+"&userName="+userName+"&articleURL="+article_url;
-                    var articleDetail_url = "articleDetail.html?article_url="+article_url+"&userName="+userName;
+                    var moreComments_url = "source/moreComments.html?userID="+userID+"&userName="+userName+"&articleURL="+article_url;
+                    var articleDetail_url = "source/articleDetail.html?article_url="+article_url+"&userName="+userName;
                     html += '<tbody>',
                     html += '<tr>',
-                    html += '<td class="number" id="comment-index">No.' + index + '</td>',
+                    html += '<td class="comment_content number" id="comment-index">No.' + index + '</td>',
                     html += '<td class="comment_content"><div><b>' + comments[i].display_name + '</b></div>',
-                    html += "<a class='comment_content' style='border:none;' id='user-comments' href='"+moreComments_url+"'>more comments</a></td>",
+                    html += "<a class='comment_content' style='color: #bfb585; font-size:14px;' id='user-comments' href='"+moreComments_url+"'>more comments</a></td>",
                     html += '<td class="comment_content" id="comment-detail" style="text-align:justify">' + comments[i].commentBody + '</td>',
-                    html += '<td id="ralated-article"><a href="'+articleDetail_url+'">Related Article</a></td>',
+                    html += '<td id="ralated-article"><a class="comment_content" style="color: #bfb585; font-size:14px;" href="'+articleDetail_url+'">Related Article</a></td>',
                     html += '</tr>',
                     html += '</tbody>'
                 }
